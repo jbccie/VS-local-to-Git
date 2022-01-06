@@ -1,0 +1,16 @@
+#Task 1- Use PS to deploy policy for Subscription and RG level.
+https://docs.microsoft.com/en-us/azure/governance/policy/assign-policy-powershell 
+
+# Create new RG 
+Get-Help -name New-AzResourceGroup
+New-AzResourceGroup -Name practicerg -Location eastus 
+$rg = get-AzResourceGroup -name 'practicerg'
+$definition = Get-AzPolicyDefinition | Where-Object { $_.Properties.DisplayName -eq "Azure Backup should be enabled for Virtual Machines" } # where-object mathces the policy with displayname
+Write-Output $definition # display contents of $ variable   
+#create new policy    
+    New-AzPolicyAssignment -Name 'Azure Backup should be enabled for Virtual Machines' -DisplayName 'Audit VMs without managed disks Assignment' -Scope $rg.ResourceId -PolicyDefinition $definition   
+
+
+# Task 2
+Move files between containers.
+.\azcopy copy 'https://az104storageaccountjas.blob.core.windows.net/az104jaslab01/Resume%20-JBahia.docx?sp=r&st=2021-12-30T20:57:17Z&se=2021-12-31T04:57:17Z&spr=https&sv=2020-08-04&sr=b&sig=kcCAn6PO86oRpYBx5mkCqZ72LLIxTSjM6BmxqwXtC7E%3D' 'https://az104storageaccountjas.blob.core.windows.net/az104labstorage02?sp=racwdli&st=2021-12-30T21:02:15Z&se=2021-12-31T05:02:15Z&spr=https&sv=2020-08-04&sr=c&sig=LaUzpiG3Pc%2Bm6CrYY7AjlNLdyyJOF4wwyLhLuwO114g%3D'
